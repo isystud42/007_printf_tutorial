@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   formatter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akharrou <akharrou@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: idsy <idsy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/15 18:29:48 by akharrou          #+#    #+#             */
-/*   Updated: 2019/05/24 16:01:23 by akharrou         ###   ########.fr       */
+/*   Created: 2020/01/08 07:57:48 by idsy              #+#    #+#             */
+/*   Updated: 2020/01/08 07:57:51 by idsy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ t_data			extract_argument(t_format format, va_list *args)
 **         #include <libft.h>
 **
 **         char *
-**         formatter(const char **buf, va_list *args, size_t *len);
+**         formatter(const char **format, va_list *args, size_t *len);
 **
 **    PARAMETERS
 **

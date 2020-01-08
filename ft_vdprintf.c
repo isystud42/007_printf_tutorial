@@ -6,7 +6,7 @@
 /*   By: idsy <idsy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 13:06:32 by idsy              #+#    #+#             */
-/*   Updated: 2020/01/06 13:06:36 by idsy             ###   ########.fr       */
+/*   Updated: 2020/01/07 08:32:22 by idsy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 int				ft_vdprintf(int filedes, const char *format, va_list *args)
 {
-	int32_t		tt_bytes;
+	int			tt_bytes;
 	char		*fstr;
 	size_t		len;
-	size_t		i;
+	int			i;
 
 	if (!format)
 		return (0);
