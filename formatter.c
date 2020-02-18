@@ -6,7 +6,7 @@
 /*   By: idsy <idsy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 07:57:48 by idsy              #+#    #+#             */
-/*   Updated: 2020/01/08 07:57:51 by idsy             ###   ########.fr       */
+/*   Updated: 2020/02/11 00:36:50 by idsy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,10 +230,10 @@ char			*formatter(const char **format, va_list *args, size_t *len)
 
 	fstr = NULL;
 	info = parse_format((*format) + 1, args);
-	if (info.specifier == NONE)
-		fstr = ft_strndup(*format, info.format_length + 1);
-	else
-	{
+	//if (info.specifier == NONE)
+		//fstr = ft_strndup(*format, info.format_length + 1);
+	//else
+	//{
 		if (info.specifier != '%')
 			arg = extract_argument(info, args);
 		i = -1;
@@ -243,7 +243,7 @@ char			*formatter(const char **format, va_list *args, size_t *len)
 				fstr = style_handler(info, g_table[i].handler(info, arg));
 				break ;
 			}
-	}
+	//}
 	(*format) += info.format_length + 1;
 	(*len) = (info.specifier == 'c' && arg.char_ == 0) ?
 		1 + info.width - (info.width > 0) : ft_strlen(fstr);

@@ -6,13 +6,13 @@
 #    By: idsy <idsy@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/06 12:46:19 by idsy              #+#    #+#              #
-#    Updated: 2020/01/08 10:51:22 by idsy             ###   ########.fr        #
+#    Updated: 2020/02/11 00:40:49 by idsy             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 Alright here's the explanation of the entire code i've produced... if you are
 a 42 student, know that this is possibly one of the most understable printf
-tutoral You'll get to see':
+tutorial You'll get to see':
 
 Everything starts at ft_printf.c, since this is what we are currently doing.
 
@@ -20,8 +20,8 @@ Everything starts at ft_printf.c, since this is what we are currently doing.
 								S T A R T
 ///////////////////////////////////////////////////////////////////////////////
 
-Basycally, you're not using printf, but vd_printf. Cuz we fancy as hell and it's
-and easy bonus. Okay now to understand the difference between printf and vd_printf
+Basically, you're not using printf, but vd_printf. Cuz we fancy as hell and it's
+an easy bonus. Okay now to understand the difference between printf and vd_printf
 we first need to learn what the man says about vd_printf:
 
 "The functions dprintf() and vdprintf() (as found in the glibc2 library) are exact
@@ -36,7 +36,7 @@ another man page:
 #Alright, but wait... So the point of using vdprint is nothing more than being
 #fancy? 
 
-#YUP. PLUS YOU GET BONUS POINTS FOR HAVING ANOTHER FUNCTION Printf related in your
+#YUP. PLUS YOU GET BONUS POINTS FOR HAVING ANOTHER FUNCTION Printf-related in your
 #library !!!!!!
 
 Alright So anyways, what we are looking to code now isn't printf' but vdprintf.
@@ -50,10 +50,10 @@ to be formatted.
 /*variables*/
 /***********/
 
-now let's' talk about the variables initated in this function:
+now let's' talk about the variables initiated in this function:
 We have:
 
--tt_bytes, 	an int32_t (if you want to have more fanciness and useless consistency)
+-t_bytes, 	an int32_t (if you want to have more fanciness and useless consistency)
 			which is basically the return value of printf (the number of chars printed)
 
 -i, 		which is a simple counter used to go though the part of the format string
@@ -97,28 +97,102 @@ that we NEED to save, what are the parameters that we need to identify in the
 string?
 
 Those are:
-	- The flags: those are '+','-',' ','#','0'
+	- The flags: those are '+','-',' ','#','0' and all manage prefixs
 		'+' : is a flag that affects signed arguments, it's purposed is solely'
 		to put the signe of the signed thingy before it's appearance'. if this
 		flag is not set, the sign will only be displayed in the case of the
 		arguent being negative
 
-		'-' : 
+		' ': is also a flag that affects the arg by adding a prefix to it,
+		in this case we don't add the sign of it' but just some spaces before a
+		a signed arg, that is ALSO positive. This is not stackable with the '+'
+		flag ang the priority goes to '+'.
+
+		'-' : is a flag that set the displayed formateed argument to be stacked
+		to the left and not to the right as it si in the default status of the
+		this has to do with the width.
+
+		'0' : is a flag tha thas to do woth the filling of the width by unsignignificant
+		0 caracters and is not compatible with either '-' or the fact that 
+		the specifier is the specifier of an int-type thingy and precision. In
+		those case it's' ignores
+
+		'#': check the man, i'm lazy'... Alright don't look at me like that'
+		This flag is dependent on the specifier and has special effects affecting
+			o,x,X: by addind a 0 or a 0x as a prefix
+			f, F: by forcing a decimal coma.
+			and is ignored if used with c, d, i, u ou s.
 
 	- The Width:
+		The width is the minimal chars generated once formatted. it's' an int
+		and can't' cause a value to be troncated. Also, you can add a wildcard
+		#supposed to take that value from the arg list by adding an '*', i handle that
+		AS A BONUS
 
 	- The Precision:
+		Same as the width, this is a int but this time it's preceded' by a dot .
+		This parameter is the field charged of telling how much significant numbers
+		we should display after a decimal coma.
 
 	- The length:
+		The length is actually the way of knowing how much bits you're' supposed to
+		give to your arg type, which means knowing in which type you'll' get it
+		h, hh ,l ,ll all have influence or the way you'll convert' your incoming arguent
+		depending on the specifier. Know that in this printf doing, we don't' implement
+		all of them but here is the list.
 
+		char
+		unsigned char							  | hh						d, i, o, u, x ou X
+
+		short int
+		short unsigned int						  | h						d, i, o, u, x ou X
+		
+		__int32
+		unsigned __int32						  | I32						d, i, o, u, x ou X
+		
+		__int64
+		unsigned __int64						  | I64						d, i, o, u, x ou X
+
+		intmax_t
+		uintmax_t	j ou 						  | I64						d, i, o, u, x ou X
+		
+		long double								  | l (L minuscule) ou L	a, A, e, E, f, F, g ou G
+		
+		long int
+		long unsigned int						  | l (L minuscule)			d, i, o, u, x ou X
+		
+		long long int
+		unsigned long long int					  | ll (LL minuscules)		d, i, o, u, x ou X
+		
+		ptrdiff_t								  | t ou I (i majuscule)	d, i, o, u, x ou X
+		
+		size_t									  | z ou I (i majuscule)	d, i, o, u, x ou X
+		
+		Caractère codé sur un octet				  | h	c ou C
+		
+		Caractère large							  | l (L minuscule) ou w	c ou C
+		
+		Chaîne de caractères codés sur un octet	h | s, S ou Z
+		
+		Chaîne de caractères larges				  | l (L minuscule) ou w	s, S ou Z
+		
 	- The specifier:
+		The specifier is the most important thing we're' about to get, it gives us the
+		very interpretation we're supposed to have' concerning the argument that is
+		being obtained.
 
-	#- And the Style
+	#- And the Style which is a bonus field supposed tell the colour of the terminal
+	#printed chars SEE MORE IN THE HANDLERS DESCRPTION.
+
 they should show up in the order i explained them too.
 Now that we know what evrything does, we need to think of an efficient way 
 of stocking all that and the best solution here is probably a struct.
 
-
+so we iniate a struct typedef in the .h containing all the info we could need
+concerning the formatting. and we'll' call subfunction supposed to take care of
+"cutting" the part we need. it's not really that interesting tho' like you just
+have to include conditions for the '*' on the width and the precision to get this
+field from the args
 
 ///////////////////////////////////////////////////////////////////////////////
 							F O R M A T T I N G

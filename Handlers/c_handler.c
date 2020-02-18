@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_handler.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akharrou <akharrou@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: idsy <idsy@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/16 18:52:40 by akharrou          #+#    #+#             */
-/*   Updated: 2019/05/08 08:14:45 by akharrou         ###   ########.fr       */
+/*   Created: 2020/01/21 11:29:26 by idsy              #+#    #+#             */
+/*   Updated: 2020/01/21 12:21:26 by idsy             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #include "../ft_printf.h"
 
 #define CHARACTER 1
-#define SENTINAL 1
+#define BACKSLASH_ZERO 1
 
 char			*c_handler(t_format format, t_data arg)
 {
@@ -48,7 +48,7 @@ char			*c_handler(t_format format, t_data arg)
 	if (format.width)
 		format.width -= CHARACTER;
 	len = CHARACTER + format.width;
-	charstr = malloc(len + SENTINAL);
+	charstr = malloc(len + BACKSLASH_ZERO);
 	if (!charstr)
 		exit(-1);
 	if (!format.width || (format.width && format.flags & MINUS))
@@ -57,8 +57,6 @@ char			*c_handler(t_format format, t_data arg)
 		charstr[format.width] = arg.char_;
 	charstr[len] = '\0';
 	if (format.width)
-		(format.flags & MINUS) ?
-			ft_memset(charstr + 1, format.pad, format.width) :
-			ft_memset(charstr, format.pad, format.width);
+		ft_memset(charstr, format.pad, format.width);
 	return (charstr);
 }
